@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 8) {
+        if(collision.gameObject.tag == "Jumpable") {
             isJumping = false;
             anim.SetBool("jump", false);
         }
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 8) {
+        if(collision.gameObject.tag == "Jumpable") {
             isJumping = true;
         }
     }
