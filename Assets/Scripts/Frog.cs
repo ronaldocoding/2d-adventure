@@ -14,6 +14,7 @@ public class Frog : MonoBehaviour
     public Transform headPoint;
     public LayerMask layer;
     public CircleCollider2D circleColl;
+    public BoxCollider2D boxColl;
 
     // Start is called before the first frame update
     void Start()
@@ -42,21 +43,29 @@ public class Frog : MonoBehaviour
         }
     }
 
+    bool playerDestroyed = false;
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
             float height = collision.contacts[0].point.y - headPoint.position.y;
 
-            if(height > 0)
+            if(height > 0 && !playerDestroyed)
             {
                 collision.gameObject.GetComponent<Rigidbody2D>()
                 .AddForce(Vector2.up * 5, ForceMode2D.Impulse);
                 speed = 0;
                 anim.SetTrigger("death");
                 circleColl.enabled = false;
+                boxColl.enabled = false;
                 rig.bodyType = RigidbodyType2D.Kinematic;
                 Destroy(gameObject, 0.33f);
+            }
+            else 
+            {
+                playerDestroyed = true;
+                GameController.instance.ShowGameOver();
+                Destroy(collision.gameObject);
             }
         }
     }
