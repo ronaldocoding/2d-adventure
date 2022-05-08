@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Spike
   - Jumpable
+  - Saw
   layers:
   - Default
   - TransparentFX
